@@ -78,7 +78,17 @@ def load_jobs_from_db():
                   .order_by(desc('num_apps'))\
                   .limit(3)\
                   .all()
-  results = [dict(row) for row in top_jobs]
+  job_list = []
+  for jobid,companyname,jobtitle,salary,department,_  in top_jobs:
+      job_dict = {
+          'jobid': jobid,
+          'companyname': companyname,
+          'jobtitle': jobtitle,
+          'salary': salary,
+          'desiredmajor': department,
+          
+      }
+      job_list.append(job_dict)
 
-  return results                      
+  return job_list                      
       

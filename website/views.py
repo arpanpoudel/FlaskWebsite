@@ -4,6 +4,7 @@ from . import engine
 views=Blueprint('views',__name__)
 from .models import *
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
 
 @views.route('/')
 @login_required
@@ -24,7 +25,7 @@ def add_student():
             return render_template("addStudent.html", user=current_user)
         try:
             with engine.connect() as conn:
-                conn.execute(f'Insert into students Values{studentId,studentName,major} ')
+                conn.execute(text(f'Insert into students Values{studentId,studentName,major} '))
             flash('Student  Added!', category='success')
             return redirect(url_for('views.home'))
         except Exception as e:
@@ -46,10 +47,9 @@ def search_student():
         query = f"SELECT * FROM students WHERE major = '{selected_major}'"
     else:
         query = "SELECT * FROM students"
-    result = session.execute(query).fetchall()
-    students = [dict(row) for row in result]
-    print(students)
-
+    result = session.execute(text(query)).fetchall()
+    columns = ['studentid', 'studentname', 'major']
+    students = [dict(zip(columns, row)) for row in result]
     # Render the search page template with the list of students and the selected major
     return render_template('searchStudent.html', students=students, selected_major=selected_major,user=current_user)
 
@@ -93,8 +93,9 @@ def search_jobs():
         query = "SELECT * FROM jobs"
     Session = sessionmaker(bind=engine)
     session = Session()
-    result = session.execute(query).fetchall()
-    jobs = [dict(row) for row in result]
+    result = session.execute(text(query)).fetchall()
+    columns = ['jobid', 'companyname','jobtitle','salary', 'desiredmajor']
+    jobs = [dict(zip(columns, row)) for row in result]
 
     # Render the search page template with the list of jobs and the selected major
     return render_template('searchJobs.html', jobs=jobs, selected_major=selected_major,user=current_user)
@@ -162,8 +163,9 @@ def search_application():
     # Create a session to interact with the database
     Session = sessionmaker(bind=engine)
     session = Session()
-    result = session.execute(query).fetchall()
-    applications = [dict(row) for row in result]
+    result = session.execute(text(query)).fetchall()
+    columns = ['studentname', 'companyname','salary', 'major']
+    applications = [dict(zip(columns, row)) for row in result]
 
     # Render the view applications page template with the list of applications and the selected major, student, or job
     return render_template('searchApplication.html', applications=applications, selected_major=selected_major, selected_student=selected_student, selected_job=selected_job,user=current_user)
