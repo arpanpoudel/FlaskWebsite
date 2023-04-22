@@ -24,11 +24,15 @@ def add_student():
             flash('Student Id should be integer.', category='error')
             return render_template("addStudent.html", user=current_user)
         try:
-            with engine.connect() as conn:
-                conn.execute(text(f'Insert into students Values{studentId,studentName,major} '))
+            Session = sessionmaker(bind=engine)
+            new_student=Student(studentid=studentId,studentname=studentName,major=major)
+            with Session() as session:
+                session.add(new_student)
+                session.commit()
             flash('Student  Added!', category='success')
             return redirect(url_for('views.home'))
         except Exception as e:
+            print(e)
             flash('Student already exists!', category='error')
             return render_template("addStudent.html", user=current_user)
         
@@ -73,9 +77,11 @@ def add_jobs():
             flash('Salary should be number.', category='error')
             return render_template("addJobs.html", user=current_user)
         
-            
-        with engine.connect() as conn:
-            conn.execute(f'Insert into jobs Values{jobId,companyName,jobTitle,salary,desiredMajor} ')
+        Session = sessionmaker(bind=engine)
+        new_job=Jobs(jobid=jobId,companyname=companyName,salary=salary,jobtitle=jobTitle,desiredmajor=desiredMajor)
+        with Session() as session:
+            session.add(new_job)
+            session.commit()     
         flash('Jobs  Added!', category='success')
         return redirect(url_for('views.home'))
     
@@ -122,19 +128,22 @@ def add_application():
             Session = sessionmaker(bind=engine)
             session = Session()
             query = f"SELECT * FROM students WHERE studentId = {studentId}"
-            result = session.execute(query).fetchone()
+            result = session.execute(text(query)).fetchone()
             if not result:
                 flash(f'No student with ID: {studentId} in the record.', category='error')
                 return render_template("addApplication.html", user=current_user)
                 
             query = f"SELECT * FROM jobs WHERE jobId = {jobId}"
-            result = session.execute(query).fetchone()
+            result = session.execute(text(query)).fetchone()
             if not result:
                 flash(f'No Job with ID: {jobId} in the record.', category='error')
                 return render_template("addApplication.html", user=current_user)
+            Session = sessionmaker(bind=engine)
+            new_app=Application(jobid=jobId,studentid=studentId)
+            with Session() as session:
+                session.add(new_app)
+                session.commit() 
             
-            with engine.connect() as conn:
-                conn.execute(f'Insert into applications (jobid,studentid) Values{jobId,studentId} ')
             flash('Application  Added!', category='success')
             return redirect(url_for('views.home'))
         except Exception as e:

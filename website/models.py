@@ -15,6 +15,11 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
 
+class Student(Base):
+    __tablename__ = 'students'
+    studentid = Column(Integer, primary_key=True)
+    studentname = Column(String)
+    major = Column(String)
 # # Define a class for the students table
 # class students(Base):
 #     __tablename__ = 'students'
@@ -23,24 +28,24 @@ class User(db.Model, UserMixin):
 #     Major = Column(String(50))
 #     applications = relationship('Application', back_populates='student')
 
-# # Define a class for the jobs table
-# class jobs(Base):
-#     __tablename__ = 'jobs'
-#     jobId = Column(Integer, primary_key=True)
-#     CompanyName = Column(String(255))
-#     JobTitle = Column(String(255))
-#     Salary = Column(Float)
-#     DesiredMajor = Column(String(50))
-#     applications = relationship('Application', back_populates='job')
+# Define a class for the jobs table
+class Jobs(Base):
+    __tablename__ = 'jobs'
+    jobid = Column(Integer, primary_key=True)
+    companyname = Column(String(255))
+    jobtitle = Column(String(255))
+    salary = Column(Float)
+    desiredmajor = Column(String(50))
+    
 
 # # Define a class for the applications table
-# class application(Base):
-#     __tablename__ = 'Applications'
-#     ApplicationId = Column(Integer, primary_key=True)
-#     StudentId = Column(Integer, ForeignKey('students.StudentId'))
-#     JobId = Column(Integer, ForeignKey('jobs.JobId'))
-#     student = relationship('Student', back_populates='applications')
-#     job = relationship('Job', back_populates='applications')
+class Application(Base):
+    __tablename__ = 'applications'
+    applicationid = Column(Integer, primary_key=True)
+    studentid = Column(Integer, ForeignKey('students.studentid'))
+    jobid = Column(Integer, ForeignKey('jobs.jobid'))
+
+
     
 # Create the tables in the database
 #Base.metadata.create_all(engine)
