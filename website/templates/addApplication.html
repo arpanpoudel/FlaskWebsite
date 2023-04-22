@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{%block title%}Add Application {%endblock%}
+{% block content %} 
+<div class="container">
+    <h1>Application Form</h1>
+    <form method="POST">
+        <div class="form-group row">
+            <label for="studentId" class="col-sm-2 col-form-label">Student ID:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="studentId" name="studentId">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="jobId" class="col-sm-2 col-form-label">Job Id:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="jobId" name="jobId">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock%}

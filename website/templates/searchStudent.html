@@ -1,0 +1,48 @@
+{% extends 'base.html'%}
+{%block title%}Search Student {%endblock%}
+{%block content%}
+<div class="container">
+    <h1>Search Students</h1>
+
+    <div class="row">
+      <div class="col-md-4">
+        <form>
+          <div class="form-group">
+            <label for="majorSelect">Filter by Major:</label>
+            <select class="form-control" id="majorSelect" name="major">
+              <option value="">All</option>
+              <option value="CSCE" {% if selected_major == 'CSCE' %}selected{% endif %}>CSCE</option>
+              <option value="MENG" {% if selected_major == 'MENG' %}selected{% endif %}>MENG</option>
+              <option value="CENG" {% if selected_major == 'CENG' %}selected{% endif %}>CENG</option>
+              <option value="PHYSICS" {% if selected_major == 'PHYSICS' %}selected{% endif %}>PHYSICS</option>
+              <option value="MATH" {% if selected_major == 'MATH' %}selected{% endif %}>MATH</option>
+              <option value="OTHER" {% if selected_major == 'OTHER' %}selected{% endif %}>OTHER</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+      </div>
+
+      <div class="col-md-8">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Student ID</th>
+              <th>Student Name</th>
+              <th>Major</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for student in students %}
+            <tr>
+              <td>{{ student['studentid'] }}</td>
+              <td>{{ student['studentname'] }}</td>
+              <td>{{ student['major'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  {%endblock%}

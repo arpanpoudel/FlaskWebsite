@@ -1,0 +1,52 @@
+{% extends 'base.html'%}
+{%block title%}Search  Jobs {%endblock%}
+{%block content%}
+<div class="container">
+    <h1>Search Jobs</h1>
+
+    <div class="row">
+      <div class="col-md-4">
+        <form>
+          <div class="form-group">
+            <label for="majorSelect">Filter by Desired Major:</label>
+            <select class="form-control" id="majorSelect" name="major">
+              <option value="">Select a Major</option>
+              <option value="CSCE" {% if selected_major == 'CSCE' %}selected{% endif %}>CSCE</option>
+              <option value="MENG" {% if selected_major == 'MENG' %}selected{% endif %}>MENG</option>
+              <option value="CENG" {% if selected_major == 'CENG' %}selected{% endif %}>CENG</option>
+              <option value="PHYSICS" {% if selected_major == 'PHYSICS' %}selected{% endif %}>PHYSICS</option>
+              <option value="MATH" {% if selected_major == 'MATH' %}selected{% endif %}>MATH</option>
+              <option value="OTHER" {% if selected_major == 'OTHER' %}selected{% endif %}>OTHER</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Filter</button>
+        </form>
+      </div>
+
+      <div class="col-md-8">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Job ID</th>
+              <th>Company Name</th>
+              <th>Job Title</th>
+              <th>Salary</th>
+              <th>Desired Major</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for job in jobs %}
+            <tr>
+              <td>{{ job['jobid'] }}</td>
+              <td>{{ job['companyname'] }}</td>
+              <td>{{ job['jobtitle'] }}</td>
+              <td>{{ job['salary'] }}</td>
+              <td>{{ job['desiredmajor'] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{%endblock%}

@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{%block title%}Add Student {%endblock%}
+{% block content %} 
+<div class="container">
+    <h1>Student Form</h1>
+    <form method="POST">
+        <div class="form-group row">
+            <label for="studentId" class="col-sm-2 col-form-label">Student ID:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="studentId" name="studentId">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="studentName" class="col-sm-2 col-form-label">Student Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="studentName" name="studentName">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="major" class="col-sm-2 col-form-label">Major:</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="major" name="major">
+                    <option value="">Select a Major</option>
+                    <option value="CSCE">CSCE</option>
+                    <option value="MENG">MENG</option>
+                    <option value="CENG">CENG</option>
+                    <option value="PHYSICS">PHYSICS</option>
+                    <option value="MATH">MATH</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{%endblock%}

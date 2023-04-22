@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+{%block title%}Add Jobs {%endblock%}
+{% block content %} 
+<div class="container">
+    <h1>Job Application Form</h1>
+    <form method="POST">
+        <div class="form-group row">
+            <label for="jobId" class="col-sm-2 col-form-label">Job ID:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="jobId" name="jobId">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="companyName" class="col-sm-2 col-form-label">Company Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="companyName" name="companyName">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="jobTitle" class="col-sm-2 col-form-label">Job Title:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="jobTitle" name="jobTitle">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="salary" class="col-sm-2 col-form-label">Salary:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="salary" name="salary">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="desiredMajor" class="col-sm-2 col-form-label">Desired Major:</label>
+            <div class="col-sm-4">
+                <select class="form-control" id="desiredMajor" name="desiredMajor">
+                    <option value="">Select a Major</option>
+                    <option value="CSCE">CSCE</option>
+                    <option value="MENG">MENG</option>
+                    <option value="CENG">CENG</option>
+                    <option value="PHYSICS">PHYSICS</option>
+                    <option value="MATH">MATH</option>
+                    <option value="OTHER">OTHER</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{%endblock%}
